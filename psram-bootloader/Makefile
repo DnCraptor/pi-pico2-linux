@@ -30,7 +30,7 @@ flash: all
 ifeq (, $(shell which picotool))
 	@$(MAKE) copy
 else
-	@$(MAKE) picotool PICOTOOL_ARGS="load -fx build/psram-bootloader.uf2"
+	@$(MAKE) picotool PICOTOOL_ARGS="load -fu build/psram-bootloader.uf2"
 endif
 
 # make CROSS_COMPILE=riscv32-unknown-elf- LD=riscv64-linux-gnu-ld demo
@@ -39,11 +39,11 @@ demo: | build
 
 flash-demo: demo flash
 	sleep 2
-	@$(MAKE) picotool PICOTOOL_ARGS="load -fxp 0 build/demo.bin"
+	@$(MAKE) picotool PICOTOOL_ARGS="load -fxup 0 build/demo.bin"
 
 flash-kernel: ../buildroot/output/images/flash-image.bin flash
 	sleep 3
-	@$(MAKE) picotool PICOTOOL_ARGS="load -fxp 0 ../buildroot/output/images/flash-image.bin"
+	@$(MAKE) picotool PICOTOOL_ARGS="load -fxup 0 ../buildroot/output/images/flash-image.bin"
 
 clean:
 	@$(MAKE) -C demo clean
