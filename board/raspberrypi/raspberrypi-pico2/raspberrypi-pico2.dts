@@ -7,13 +7,18 @@
 	model = "riscv-minimal-nommu,qemu";
 
 	chosen {
-		bootargs = "earlycon=pl011,mmio32,0x40070000 console=ttyAMA0 root=/dev/mtdblock0 ro rootwait";
+		bootargs = "earlycon=pl011,mmio32,0x40070000 console=ttyAMA0 root=/dev/mtdblock0 ro rootwait init=/bin/sh";
 	};
 
 	memory@11000000 {
 		device_type = "memory";
 		reg = <0x11000000 0x800000>;	/* 8MB */
 	};
+
+//	memory@20000000 {
+//		device_type = "memory";
+//		reg = <0x20000000 0x82000>;	/* 520kB */
+//	};
 
 	cpus {
 		#address-cells = <1>;
@@ -62,13 +67,11 @@
 		};
 
 		/* TODO: Add interrupt controller */
-		/*
-		clint@11000000 {
+		clint@d0000000 {
 			interrupts-extended = <&cpu0_intc 3>,
-					      <&cpu0_intc 3>;
-			reg = <0 0x11000000 0 0x10000>;
+					      <&cpu0_intc 7>;
+			reg = <0xd0000000 0x400>;
 			compatible = "riscv,clint0";
 		};
-		*/
 	};
 };
